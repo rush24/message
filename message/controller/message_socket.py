@@ -24,7 +24,5 @@ class MessageSocketHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         oauth_token = self.get_secure_cookie(settings["OAUTH"]["session_key"])
         user_name = redis_client.get(oauth_token)
-        to_user, message = MessageHandler.handle(user_name, message)
-        to = MessageSocketHandler.socket_pool.get(to_user, None) if to_user else None
-        if to:
-            to.write_message(message)
+        MessageHandler.handle(user_name, message, MessageSocketHandler.socket_pool)
+
