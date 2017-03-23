@@ -1,0 +1,14 @@
+*.py[cod]
+*.egg
+*.egg-info
+dist
+build
+*.db
+bin/
+.buildout/
+.cache/
+.coverage
+.idea/
+.installed.cfg
+coverage.xml
+htmlcov/
