@@ -26,3 +26,5 @@ class MessageSocketHandler(tornado.websocket.WebSocketHandler):
         user_name = redis_client.get(oauth_token)
         MessageHandler.handle(user_name, message, MessageSocketHandler.socket_pool)
 
+    def check_origin(self, origin):
+        return True
