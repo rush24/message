@@ -33,8 +33,6 @@ class APIHandler(BaseHandler):
 
     def finish(self, chunk=None):
         self.set_header("Content-Type", "application/json; charset=UTF-8")
-        self.set_header("Access-Control-Allow-Origin", "*")
-
         return super(APIHandler, self).finish(chunk)
 
     def write(self, chunk):
