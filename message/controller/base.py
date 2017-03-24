@@ -14,6 +14,15 @@ class BaseHandler(tornado.web.RequestHandler):
         user_name = redis_client.get(oauth_token)
         return user_name
 
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-File-Name")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, OPTIONS')
+
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
 
 class APIHandler(BaseHandler):
 
@@ -23,6 +32,7 @@ class APIHandler(BaseHandler):
     def finish(self, chunk=None):
         self.set_header("Content-Type", "application/json; charset=UTF-8")
         self.set_header("Access-Control-Allow-Origin", "*")
+
         return super(APIHandler, self).finish(chunk)
 
     def write(self, chunk):
