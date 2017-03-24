@@ -120,10 +120,11 @@ class MessageHandler(object):
         to = socket_pool.get(message.get("to_user"), None)
         if to:
             to.write_message(message)
-            to.write_message({
-                "type": "get_friends",
-                "friends": to_user.get("friends"),
-            })
+            if not find_friend:
+                to.write_message({
+                    "type": "get_friends",
+                    "friends": to_user.get("friends"),
+                })
 
         # 再回发给消息发起者做回显，再将 from_user 处理是为了发起者能实时接收这条消息
         message['from_user'] = message['to_user']
