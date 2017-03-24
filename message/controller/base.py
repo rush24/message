@@ -15,12 +15,14 @@ class BaseHandler(tornado.web.RequestHandler):
         return user_name
 
     def set_default_headers(self):
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.set_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-File-Name")
+        self.set_header("Access-Control-Allow-Origin", self.request.headers.get('Origin', "*"))
+        self.set_header("Access-Control-Allow-Headers", "*")
         self.set_header('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, OPTIONS')
+        self.set_header('Access-Control-Allow-Credentials', "true")
 
     def options(self):
         self.set_status(204)
+        self.set_header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-File-Name")
         self.finish()
 
 
